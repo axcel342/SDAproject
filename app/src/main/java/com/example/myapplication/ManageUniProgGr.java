@@ -42,8 +42,10 @@ public class ManageUniProgGr extends AppCompatActivity {
         String credithr = getIntent().getExtras().getString("credithrkey");
         String feepercredit = getIntent().getExtras().getString("feepercreditkey");
         String Depname = getIntent().getExtras().getString("depname");
-        int Depadd = getIntent().getExtras().getInt("Depadd");
+        int Depadd = getIntent().getExtras().getInt("Adddep");
         int value = getIntent().getExtras().getInt("Program");
+
+        int depadd = Depadd;
 
         UniversityManager obj = new UniversityManager();
         obj.connectToDb(ManageUniProgGr.this);
@@ -83,7 +85,18 @@ public class ManageUniProgGr extends AppCompatActivity {
                         }
 
                         else{
-                            programlist.remove(i);
+                            try {
+                                programlist.remove(i);
+                            }
+
+                            catch(Exception e)
+                            {
+                                Toast.makeText(ManageUniProgGr.this, "An error has occured ",Toast.LENGTH_LONG).show();
+                                Intent in = new Intent(ManageUniProgGr.this, ManageUniProgInput.class);
+                                in.putExtra("Program", value);
+                                in.putExtra("Adddep", depadd);
+                                startActivity(in);
+                            }
                         }
                     }
                 });
@@ -144,12 +157,16 @@ public class ManageUniProgGr extends AppCompatActivity {
             public void onClick(View view) {
 
 
+
+
                 EditText ReqCGPA = findViewById(R.id.CGPA);
-                int depadd = Depadd;
+
+
+                Log.d("depadd:", " "+depadd);
 
                 if(ReqCGPA.length() != 0 && userChoice.size() != 0)
                 {
-                    Log.d("prefields",credithr);
+               //     Log.d("prefields",credithr);
                     float prog_cgpa = Float.valueOf(String.valueOf(ReqCGPA.getText().toString()));
                     int progcredithr = Integer.valueOf(credithr);
                     int progfeepercredit = Integer.valueOf(feepercredit);
@@ -159,7 +176,7 @@ public class ManageUniProgGr extends AppCompatActivity {
                     {
                        // int result = obj.UniqueProgram(ManageUniProgGr.this, ProgramName, Depname, CurrentUniname);
 
-                        if(!obj.checkUniquenessProgram(ManageUniProgGr.this, CurrentUniname, Depname, ProgramName))
+                        if(obj.checkUniquenessProgram(ManageUniProgGr.this, CurrentUniname, Depname, ProgramName))
                         {
                             obj.createProgramGraduate(ManageUniProgGr.this,Depname,ProgramName,progcredithr,progfeepercredit,prog_cgpa, userChoice, CurrentUniname);
 
@@ -174,7 +191,7 @@ public class ManageUniProgGr extends AppCompatActivity {
                             Toast.makeText(ManageUniProgGr.this, "Please Enter a unique program ",Toast.LENGTH_LONG).show();
                             Intent in = new Intent(ManageUniProgGr.this, ManageUniProgInput.class);
                             in.putExtra("Program", value);
-                            in.putExtra("Depadd", depadd);
+                            in.putExtra("Adddep", depadd);
                             startActivity(in);
                         }
 
@@ -204,7 +221,7 @@ public class ManageUniProgGr extends AppCompatActivity {
                             Toast.makeText(ManageUniProgGr.this, "Invalid University id",Toast.LENGTH_LONG).show();
                             Intent in = new Intent(ManageUniProgGr.this, ManageUniProgInput.class);
                             in.putExtra("Program", value);
-                            in.putExtra("Depadd", depadd);
+                            in.putExtra("Adddep", depadd);
                             startActivity(in);
                         }
 
@@ -213,7 +230,7 @@ public class ManageUniProgGr extends AppCompatActivity {
                             Toast.makeText(ManageUniProgGr.this, "Please Enter a unique department",Toast.LENGTH_LONG).show();
                             Intent in = new Intent(ManageUniProgGr.this, ManageUniProgInput.class);
                             in.putExtra("Program", value);
-                            in.putExtra("Depadd", depadd);
+                            in.putExtra("Adddep", depadd);
                             startActivity(in);
                         }
 
@@ -230,7 +247,7 @@ public class ManageUniProgGr extends AppCompatActivity {
                     in.putExtra("feepercreditkey", feepercredit);
                     in.putExtra("depname", Depname);
                     in.putExtra("Program", value);
-                    in.putExtra("Depadd", depadd);
+                    in.putExtra("Adddep", depadd);
                     startActivity(in);
                 }
 

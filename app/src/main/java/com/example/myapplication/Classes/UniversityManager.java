@@ -1475,13 +1475,210 @@ public class UniversityManager extends dbConnection{
         }
 
         return 0;           //error
+    }
+
+    public boolean checkUniquenessDept(Context ptr, String name, String dname, String pname)
+    {
+        if(connection != null)
+        {
+            Statement statement = null;
+
+            try {
+                statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("Select 1 from [User] a join University u on a.idUser = u.idUniversity join Department d on u.idUniversity = d.idUniversity where a.userName = '"+name+"' and d.name = '"+dname+"'");
 
 
+                while(resultSet.next())
+                {
+                    if (resultSet.getString(1).equals("1")) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            }
+            catch(SQLException e)
+            {
+                e.printStackTrace();
+                Toast.makeText(ptr, "Unable to check program uniqueness. Kindly try again", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else
+        {
+            Toast.makeText(ptr,"Connection is null", Toast.LENGTH_SHORT).show();
+        }
+
+        return true;
+    }
+
+    public int DeleteAlumini(Context ptr, String AlumName, String uniname)
+    {
+        if(connection != null) {
+
+            Statement statement = null;
+            Statement statement1 = null;
+            Statement statement2 = null;
+
+            int sql_ret_id = 0;
+            int uniid = 0;
+
+            try
+            {
+                statement2 = connection.createStatement();
+                String query3 = "select u.idUser from [User] u where u.[userName] = '"+uniname+"'";
+                ResultSet resultSet3 = statement2.executeQuery(query3);
+
+                while(resultSet3.next())
+                {
+                    uniid = resultSet3.getInt(1);
+                    //  Toast.makeText(ptr, String.valueOf(stuId), Toast.LENGTH_SHORT).show();
+                }
 
 
+            }
+            catch(SQLException e)
+            {
+                e.printStackTrace();
+                //  Toast.makeText(ptr,e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            if(uniid == 0)
+                return 0;
+
+            try
+            {
+
+                statement1 = connection.createStatement();
+                Log.d("alum info", uniid + AlumName);
+                String query1 = "Delete from [Alumni] where idUniversity = "+uniid+" AND [name] = '"+AlumName+"'";
+                statement1.executeQuery(query1);
+            }
+            catch(SQLException e)
+            {
+                e.printStackTrace();
+                //  Toast.makeText(ptr,e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            return 1;
 
 
+        }
+
+        return 0;
 
     }
+
+    public int DeleteFaculty(Context ptr, String Email,String uniname)
+    {
+        if(connection != null) {
+
+            Statement statement = null;
+            Statement statement1 = null;
+            Statement statement2 = null;
+
+            int sql_ret_id = 0;
+            int uniid = 0;
+
+            try
+            {
+                statement2 = connection.createStatement();
+                String query3 = "select u.idUser from [User] u where u.[userName] = '"+uniname+"'";
+                ResultSet resultSet3 = statement2.executeQuery(query3);
+
+                while(resultSet3.next())
+                {
+                    uniid = resultSet3.getInt(1);
+                    //  Toast.makeText(ptr, String.valueOf(stuId), Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+            catch(SQLException e)
+            {
+                e.printStackTrace();
+                //  Toast.makeText(ptr,e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            if(uniid == 0)
+                return 0;
+
+            try
+            {
+
+                statement1 = connection.createStatement();
+                String query1 = "Delete from [Faculty] where idUniversity = "+uniid+" AND email = '"+Email+"'";
+                statement1.executeQuery(query1);
+            }
+            catch(SQLException e)
+            {
+                e.printStackTrace();
+                //  Toast.makeText(ptr,e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            return 1;
+
+
+        }
+
+        return 0;
+
+    }
+
+    public int DeleteFAid(Context ptr, String name,String uniname)
+    {
+        if(connection != null) {
+
+            Statement statement = null;
+            Statement statement1 = null;
+            Statement statement2 = null;
+
+            int sql_ret_id = 0;
+            int uniid = 0;
+
+            try
+            {
+                statement2 = connection.createStatement();
+                String query3 = "select u.idUser from [User] u where u.[userName] = '"+uniname+"'";
+                ResultSet resultSet3 = statement2.executeQuery(query3);
+
+                while(resultSet3.next())
+                {
+                    uniid = resultSet3.getInt(1);
+                    //  Toast.makeText(ptr, String.valueOf(stuId), Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+            catch(SQLException e)
+            {
+                e.printStackTrace();
+                //  Toast.makeText(ptr,e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            if(uniid == 0)
+                return 0;
+
+            try
+            {
+
+                statement1 = connection.createStatement();
+                String query1 = "Delete from [FinancialAid] where idUniversity = "+uniid+" AND name = '"+name+"'";
+                statement1.executeQuery(query1);
+            }
+            catch(SQLException e)
+            {
+                e.printStackTrace();
+                //  Toast.makeText(ptr,e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            return 1;
+
+
+        }
+
+        return 0;
+
+    }
+
 
 }

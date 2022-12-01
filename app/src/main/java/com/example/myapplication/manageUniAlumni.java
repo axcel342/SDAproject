@@ -33,7 +33,8 @@ public class manageUniAlumni extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+//                Intent in = new Intent(manageUniAlumni.this, signupUni_Alumni.class);
+//                startActivity(in);
             }
         });
 
@@ -50,6 +51,9 @@ public class manageUniAlumni extends AppCompatActivity {
         b3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent in = new Intent(manageUniAlumni.this, ManageUniAluminiDel.class);
+                startActivity(in);
 
             }
         });

@@ -41,6 +41,8 @@ public class manageUniFaculty extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                Intent in = new Intent(manageUniFaculty.this, ManageUniFacultyDel.class);
+                startActivity(in);
             }
         });
     }

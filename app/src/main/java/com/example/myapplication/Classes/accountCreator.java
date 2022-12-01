@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class accountCreator extends dbConnection{
+public class  accountCreator extends dbConnection{
 
     public boolean checkUsername(Context ptr, String name)
     {
@@ -343,5 +343,40 @@ public class accountCreator extends dbConnection{
         }
     }
 
+
+
+    public void insertAlumniDetails(Context ptr,String name,String company,int batch,String uname)
+    {
+        int uniId=0;
+
+        if(connection!=null)
+        {
+            Statement s1=null;
+            Statement s3=null;
+            try{
+                s3 = connection.createStatement();
+                String query1 = "select a.idUser from [User] a join University u on a.idUser=u.idUniversity where a.userName = '"+name+"'";
+                ResultSet resultSet1 = s3.executeQuery(query1);
+
+                while(resultSet1.next())
+                {
+                    uniId = resultSet1.getInt(1);
+                }
+            }
+            catch(SQLException e)
+            {
+                e.printStackTrace();
+            }
+            try {
+                s1 = connection.createStatement();
+                String query = "insert into Alumni values ("+uniId+",'"+name+"', '"+company+"', "+batch+")";
+                s1.executeQuery(query);
+            }
+            catch(SQLException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

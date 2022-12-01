@@ -40,8 +40,10 @@ public class ManageUniProgUnderGr extends AppCompatActivity {
         String credithr = getIntent().getExtras().getString("credithrkey");
         String feepercredit = getIntent().getExtras().getString("feepercreditkey");
         String Depname = getIntent().getExtras().getString("depname");
-        int Depadd = getIntent().getExtras().getInt("Depadd");
+        int Depadd = getIntent().getExtras().getInt("Adddep");
         int value = getIntent().getExtras().getInt("Program");
+
+        int depadd = Depadd;
         //Log.d("info:", ProgramName+credithr+feepercredit);
 
 
@@ -86,7 +88,19 @@ public class ManageUniProgUnderGr extends AppCompatActivity {
                         }
 
                         else{
-                            programlist.remove(i);
+                            try {
+                                programlist.remove(i);
+                            }
+
+                            catch(Exception e)
+                            {
+                                Toast.makeText(ManageUniProgUnderGr.this, "An error has occured ",Toast.LENGTH_LONG).show();
+                                Intent in = new Intent(ManageUniProgUnderGr.this, ManageUniProgInput.class);
+                                in.putExtra("Program", value);
+                                in.putExtra("Adddep", depadd);
+                                startActivity(in);
+                            }
+
                         }
                     }
                 });
@@ -152,7 +166,7 @@ public class ManageUniProgUnderGr extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                int depadd = Depadd;
+
 
 
                 EditText ReqMarks = findViewById(R.id.MinMarks);
@@ -171,7 +185,7 @@ public class ManageUniProgUnderGr extends AppCompatActivity {
                     {
                       //  int result = obj.UniqueProgram(ManageUniProgUnderGr.this,ProgramName, Depname, CurrentUniname);
 
-                        if(!obj.checkUniquenessProgram(ManageUniProgUnderGr.this, CurrentUniname,Depname,ProgramName))
+                        if( obj.checkUniquenessProgram(ManageUniProgUnderGr.this, CurrentUniname,Depname,ProgramName))
                        {
                             obj.createProgramUnderGraduate(ManageUniProgUnderGr.this,Depname,ProgramName,progcredithr,progfeepercredit,prog_req_marks, userChoice, CurrentUniname);
 
@@ -187,27 +201,19 @@ public class ManageUniProgUnderGr extends AppCompatActivity {
                             Toast.makeText(ManageUniProgUnderGr.this, "Please Enter a unique program ",Toast.LENGTH_LONG).show();
                             Intent in = new Intent(ManageUniProgUnderGr.this, ManageUniProgInput.class);
                             in.putExtra("Program", value);
-                            in.putExtra("Depadd", depadd);
+                            in.putExtra("Adddep", depadd);
                             startActivity(in);
                         }
-
-                     //   else if(result == 0)
-                     //   {
-//                            Toast.makeText(ManageUniProgUnderGr.this, "Please Enter a unique department",Toast.LENGTH_LONG).show();
-//                            Intent in = new Intent(ManageUniProgUnderGr.this, ManageUniProgInput.class);
-//                            in.putExtra("Program", value);
-//                            startActivity(in);
-                     //   }
 
                     }
 
                     else if(depadd == 1)
                     {
-                        int depUnique = obj.UniqueDepartment(ManageUniProgUnderGr.this, Depname, CurrentUniname);
+                       // int depUnique = obj.UniqueDepartment(ManageUniProgUnderGr.this, Depname, CurrentUniname);
 
                         //  int result = obj.UniqueProgram(ManageUniProgUnderGr.this,ProgramName, Depname);
 
-                        if( depUnique == 1)
+                        if( obj.checkUniquenessDept(ManageUniProgUnderGr.this, CurrentUniname, Depname,ProgramName))
                         {
                             obj.createDepartment(ManageUniProgUnderGr.this,Depname, CurrentUniname);
 
@@ -222,21 +228,12 @@ public class ManageUniProgUnderGr extends AppCompatActivity {
 
                         }
 
-                        else if( depUnique == 2)
-                        {
-                            Toast.makeText(ManageUniProgUnderGr.this, "Invalid University id",Toast.LENGTH_LONG).show();
-                            Intent in = new Intent(ManageUniProgUnderGr.this, ManageUniProgInput.class);
-                            in.putExtra("Program", value);
-                            in.putExtra("Depadd", depadd);
-                            startActivity(in);
-                        }
-
-                        else if(depUnique == 0)
+                        else
                         {
                             Toast.makeText(ManageUniProgUnderGr.this, "Please Enter a unique department",Toast.LENGTH_LONG).show();
                             Intent in = new Intent(ManageUniProgUnderGr.this, ManageUniProgInput.class);
                             in.putExtra("Program", value);
-                            in.putExtra("Depadd", depadd);
+                            in.putExtra("Adddep", depadd);
                             startActivity(in);
                         }
 
@@ -256,7 +253,7 @@ public class ManageUniProgUnderGr extends AppCompatActivity {
                     in.putExtra("feepercreditkey", feepercredit);
                     in.putExtra("depname", Depname);
                     in.putExtra("Program", value);
-                    in.putExtra("Depadd", depadd);
+                    in.putExtra("Adddep", depadd);
                     startActivity(in);
                 }
 

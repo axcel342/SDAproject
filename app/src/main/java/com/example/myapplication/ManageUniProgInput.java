@@ -65,7 +65,7 @@ public class ManageUniProgInput extends AppCompatActivity {
                         in.putExtra("credithrkey", progcredit);
                         in.putExtra("feepercreditkey", progfee);
                         in.putExtra("depname", depname);
-                        in.putExtra("Depadd", depadd);
+                        in.putExtra("Adddep", depadd);
                         in.putExtra("Program", value);
                         startActivity(in);
                     }
@@ -80,7 +80,7 @@ public class ManageUniProgInput extends AppCompatActivity {
                         in.putExtra("credithrkey", progcredit);
                         in.putExtra("feepercreditkey", progfee);
                         in.putExtra("depname", depname);
-                        in.putExtra("Depadd", depadd);
+                        in.putExtra("Adddep", depadd);
                         in.putExtra("Program", value);
                         startActivity(in);
                     }
@@ -91,6 +91,7 @@ public class ManageUniProgInput extends AppCompatActivity {
                     Toast.makeText(ManageUniProgInput.this, "Please Fill each",Toast.LENGTH_LONG).show();
                     Intent in = new Intent(ManageUniProgInput.this, ManageUniProgInput.class);
                     in.putExtra("Program", value);
+                    in.putExtra("Adddep", depadd);
                     startActivity(in);
                 }
 

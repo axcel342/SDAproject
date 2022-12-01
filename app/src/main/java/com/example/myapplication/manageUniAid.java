@@ -55,6 +55,9 @@ public class manageUniAid extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                Intent in = new Intent(manageUniAid.this, ManageUniFinancialAidDel.class);
+                startActivity(in);
+
             }
         });
 
